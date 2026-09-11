@@ -5,6 +5,14 @@
   "version": "0.1.0",
   "publisher": "vizzer",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krishnaGauss/Vizzer.git"
+  },
+  "homepage": "https://github.com/krishnaGauss/Vizzer#readme",
+  "bugs": {
+    "url": "https://github.com/krishnaGauss/Vizzer/issues"
+  },
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -200,14 +208,19 @@
     "build": "node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p src/webview",
-    "lint": "eslint src test",
+    "lint": "eslint src test bench",
     "test": "vitest run",
     "check": "npm run typecheck && npm run lint && npm test",
     "vscode:prepublish": "npm run typecheck && node esbuild.mjs --production",
-    "package": "vsce package --no-dependencies --allow-missing-repository"
+    "package": "vsce package --no-dependencies",
+    "bench:build": "node bench/build.mjs",
+    "bench:run": "npm run bench:build && node bench/dist/run.cjs",
+    "bench:overhead": "npm run bench:build && node bench/dist/overhead.cjs",
+    "bench:report": "npm run bench:build && node bench/dist/report.cjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^20.17.0",
     "@types/vscode": "~1.90.0",
     "@vscode/vsce": "^3.2.0",

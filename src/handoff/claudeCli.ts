@@ -3,6 +3,7 @@ import { constants as fsConstants, promises as fs } from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import { expandHome } from '../sessions/claudePaths';
+import type { TokenUsage } from '../transcript/types';
 
 export type ClaudeCliErrorCode = 'not-found' | 'failed' | 'timeout' | 'cancelled' | 'invalid-output';
 
@@ -77,6 +78,7 @@ export interface ClaudePrintResult {
   text: string;
   costUsd?: number;
   durationMs?: number;
+  usage?: TokenUsage;
 }
 
 /**
@@ -174,6 +176,18 @@ export function parsePrintOutput(stdout: string, exitCode: number | null, stderr
     text,
     costUsd: typeof result.total_cost_usd === 'number' ? result.total_cost_usd : undefined,
     durationMs: typeof result.duration_ms === 'number' ? result.duration_ms : undefined,
+    usage: parseUsage(result.usage),
+  };
+}
+
+function parseUsage(value: unknown): TokenUsage | undefined {
+  if (!isRecord(value)) return undefined;
+  const count = (field: unknown): number => (typeof field === 'number' && Number.isFinite(field) ? field : 0);
+  return {
+    input: count(value.input_tokens),
+    cacheWrite: count(value.cache_creation_input_tokens),
+    cacheRead: count(value.cache_read_input_tokens),
+    output: count(value.output_tokens),
   };
 }
 

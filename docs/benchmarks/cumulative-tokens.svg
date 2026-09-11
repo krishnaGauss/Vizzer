@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="440" viewBox="0 0 840 440" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+<title id="title">Total tokens processed</title>
+<desc id="desc">Line chart of cumulative tokens processed per turn for both runs.</desc>
+<rect x="0.5" y="0.5" width="839" height="439" rx="12" fill="#fcfcfb" stroke="rgba(11,11,11,0.10)"/>
+<text x="32" y="40" font-size="20" font-weight="600" fill="#0b0b0b" text-anchor="start">Total tokens processed</text>
+<text x="32" y="64" font-size="13" fill="#52514e" text-anchor="start">Cumulative input, cache and output tokens incl. subagents · Vizzer run includes the Haiku handoff</text>
+<line x1="32" x2="50" y1="92" y2="92" stroke="#2a78d6" stroke-width="2" stroke-linecap="round"/>
+<circle cx="41" cy="92" r="4" fill="#2a78d6"/>
+<text x="58" y="96" font-size="13" fill="#52514e" text-anchor="start">With Vizzer</text>
+<line x1="162.08" x2="180.08" y1="92" y2="92" stroke="#eb6834" stroke-width="2" stroke-linecap="round"/>
+<circle cx="171.1" cy="92" r="4" fill="#eb6834"/>
+<text x="188.1" y="96" font-size="13" fill="#52514e" text-anchor="start">Without Vizzer</text>
+<line x1="72" x2="690" y1="376" y2="376" stroke="#c3c2b7" stroke-width="1"/>
+<text x="62" y="380" font-size="12" fill="#898781" text-anchor="end" style="font-variant-numeric: tabular-nums">0</text>
+<line x1="72" x2="690" y1="313" y2="313" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="317" font-size="12" fill="#898781" text-anchor="end" style="font-variant-numeric: tabular-nums">2M</text>
+<line x1="72" x2="690" y1="250" y2="250" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="254" font-size="12" fill="#898781" text-anchor="end" style="font-variant-numeric: tabular-nums">4M</text>
+<line x1="72" x2="690" y1="187" y2="187" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="191" font-size="12" fill="#898781" text-anchor="end" style="font-variant-numeric: tabular-nums">6M</text>
+<line x1="72" x2="690" y1="124" y2="124" stroke="#e1e0d9" stroke-width="1"/>
+<text x="62" y="128" font-size="12" fill="#898781" text-anchor="end" style="font-variant-numeric: tabular-nums">8M</text>
+<text x="72" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">1</text>
+<text x="119.5" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">2</text>
+<text x="167.1" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">3</text>
+<text x="214.6" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">4</text>
+<text x="262.2" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">5</text>
+<text x="309.7" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">6</text>
+<text x="357.2" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">7</text>
+<text x="404.8" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">8</text>
+<text x="452.3" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">9</text>
+<text x="499.8" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">10</text>
+<text x="547.4" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">11</text>
+<text x="594.9" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">12</text>
+<text x="642.5" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">13</text>
+<text x="690" y="398" font-size="12" fill="#898781" text-anchor="middle" style="font-variant-numeric: tabular-nums">14</text>
+<text x="381" y="422" font-size="12" fill="#52514e" text-anchor="middle">Turn</text>
+<line x1="381" x2="381" y1="114" y2="376" stroke="#898781" stroke-width="1"/>
+<text x="387" y="110" font-size="12" fill="#52514e" text-anchor="start">Vizzer handoff</text>
+<path d="M72,366 L119.5,355.9 L167.1,336.4 L214.6,315.2 L262.2,304.6 L309.7,300.2 L357.2,298 L404.8,287 L452.3,272 L499.8,265.3 L547.4,237.6 L594.9,232.6 L642.5,222.4 L690,217.1" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M72,364.5 L119.5,351.1 L167.1,331.3 L214.6,312.7 L262.2,298.9 L309.7,293.2 L357.2,290.4 L404.8,275.1 L452.3,249.2 L499.8,232.2 L547.4,188.1 L594.9,179.8 L642.5,162.9 L690,154.2" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="690" cy="217.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<text x="702" y="216.1" font-size="13" font-weight="600" fill="#0b0b0b" text-anchor="start" style="font-variant-numeric: tabular-nums">5.04M</text>
+<text x="702" y="232.1" font-size="12" fill="#52514e" text-anchor="start">With Vizzer</text>
+<circle cx="690" cy="154.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<text x="702" y="153.2" font-size="13" font-weight="600" fill="#0b0b0b" text-anchor="start" style="font-variant-numeric: tabular-nums">7.04M</text>
+<text x="702" y="169.2" font-size="12" fill="#52514e" text-anchor="start">Without Vizzer</text>
+</svg>

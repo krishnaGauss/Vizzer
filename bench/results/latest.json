@@ -1,0 +1,1295 @@
+{
+  "version": 1,
+  "startedAt": "2026-09-11T15:45:28.374Z",
+  "environment": {
+    "claudeVersion": "2.1.123 (Claude Code)",
+    "model": "claude-sonnet-5",
+    "handoffModel": "haiku",
+    "node": "v24.13.0",
+    "platform": "darwin 24.6.0 arm64"
+  },
+  "tasks": [
+    "Read through the source in src/ (all layers) and give me a concise overview of the architecture: the layers, the key modules, and how data flows from a transcript file to the status bar.",
+    "In src/core/format.ts add a `formatDuration(ms: number): string` helper (examples: 950 -> \"950ms\", 12000 -> \"12s\", 185000 -> \"3m 05s\", 3720000 -> \"1h 02m\"). Add unit tests to test/format.test.ts and run them with `npx vitest run test/format.test.ts`.",
+    "Track when a session started: add a `firstActivity` timestamp to SessionStats in src/transcript/sessionAccumulator.ts (the earliest timestamp seen), with tests in test/sessionAccumulator.test.ts. Run those tests.",
+    "Expose the session length in SessionView (src/core/sessionView.ts) as `durationMs` (lastActivity minus firstActivity, 0 when unknown) and cover it in test/sessionView.test.ts.",
+    "Show the session length in the status bar tooltip (src/ui/statusBar.ts) using the formatDuration helper we just added, next to the prompt count.",
+    "Run the whole test suite (`npx vitest run`) and the typecheck (`npx tsc --noEmit -p .`), and fix anything that fails.",
+    "Before we move on, summarize what we have changed so far and what could come next.",
+    "Now show the session length in the sidebar card too: add it to the meta line in src/webview/main.ts, reusing the same helper as the status bar.",
+    "Add a `cacheHitRate` field to SessionView: cacheRead divided by all input tokens (input + cacheWrite + cacheRead) of the session totals, 0 when there are none. Add tests.",
+    "Show the cache hit rate as a percentage in the status bar tooltip, on the same line as the session length we added earlier.",
+    "Review every change we made in this session for edge cases (zero or missing timestamps, sessions with no tokens) and add any missing tests.",
+    "Run the full test suite and the typecheck again and fix any failures.",
+    "Update the Features section of README.md to mention the session length and cache hit rate.",
+    "Final check: list every function, field and file we added or changed in this session, with one line on why for each."
+  ],
+  "handoffAfterTurn": 7,
+  "arms": {
+    "baseline": {
+      "label": "Without Vizzer (one long session)",
+      "status": "done",
+      "turns": [
+        {
+          "turn": 1,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 65033,
+          "requests": 8,
+          "input": 16,
+          "cacheWrite": 50952,
+          "cacheRead": 307336,
+          "output": 5386,
+          "tokensProcessed": 363690,
+          "costUsd": 0.36456879999999997,
+          "durationMs": 70157,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-haiku-4-5-20251001",
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 2,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 72527,
+          "requests": 6,
+          "input": 12,
+          "cacheWrite": 7494,
+          "cacheRead": 414912,
+          "output": 3372,
+          "tokensProcessed": 425790,
+          "costUsd": 0.20319210000000004,
+          "durationMs": 37708,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 3,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 81025,
+          "requests": 8,
+          "input": 16,
+          "cacheWrite": 8498,
+          "cacheRead": 617221,
+          "output": 3346,
+          "tokensProcessed": 629081,
+          "costUsd": 0.2672718,
+          "durationMs": 39717,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 4,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 85784,
+          "requests": 7,
+          "input": 14,
+          "cacheWrite": 4759,
+          "cacheRead": 582829,
+          "output": 2498,
+          "tokensProcessed": 590100,
+          "costUsd": 0.23020695000000002,
+          "durationMs": 32011,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 5,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 88846,
+          "requests": 5,
+          "input": 10,
+          "cacheWrite": 3062,
+          "cacheRead": 434426,
+          "output": 1878,
+          "tokensProcessed": 439376,
+          "costUsd": 0.1700103,
+          "durationMs": 24394,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 6,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 89903,
+          "requests": 2,
+          "input": 4,
+          "cacheWrite": 1057,
+          "cacheRead": 177984,
+          "output": 201,
+          "tokensProcessed": 179246,
+          "costUsd": 0.06038595,
+          "durationMs": 6824,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 7,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 90009,
+          "requests": 1,
+          "input": 2,
+          "cacheWrite": 106,
+          "cacheRead": 89901,
+          "output": 1007,
+          "tokensProcessed": 91016,
+          "costUsd": 0.042478800000000004,
+          "durationMs": 10552,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 8,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 98752,
+          "requests": 5,
+          "input": 10,
+          "cacheWrite": 8743,
+          "cacheRead": 473761,
+          "output": 1159,
+          "tokensProcessed": 483673,
+          "costUsd": 0.19232955000000002,
+          "durationMs": 19676,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 9,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 105092,
+          "requests": 8,
+          "input": 16,
+          "cacheWrite": 6340,
+          "cacheRead": 812964,
+          "output": 2938,
+          "tokensProcessed": 822258,
+          "costUsd": 0.3117822,
+          "durationMs": 40134,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 10,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 109253,
+          "requests": 5,
+          "input": 10,
+          "cacheWrite": 4161,
+          "cacheRead": 533772,
+          "output": 2077,
+          "tokensProcessed": 540020,
+          "costUsd": 0.20692035,
+          "durationMs": 30193,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 11,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 130874,
+          "requests": 11,
+          "input": 22,
+          "cacheWrite": 21621,
+          "cacheRead": 1364619,
+          "output": 13319,
+          "tokensProcessed": 1399581,
+          "costUsd": 0.6903154499999999,
+          "durationMs": 140347,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 12,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 132468,
+          "requests": 2,
+          "input": 4,
+          "cacheWrite": 1594,
+          "cacheRead": 262613,
+          "output": 159,
+          "tokensProcessed": 264370,
+          "costUsd": 0.08715839999999998,
+          "durationMs": 5520,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 13,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 134648,
+          "requests": 4,
+          "input": 8,
+          "cacheWrite": 2180,
+          "cacheRead": 532661,
+          "output": 1438,
+          "tokensProcessed": 536287,
+          "costUsd": 0.1895673,
+          "durationMs": 19597,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 14,
+          "segment": 1,
+          "sessionId": "f214d859-1f93-4aa4-9e3a-c60ccd6edb63",
+          "contextEnd": 137432,
+          "requests": 2,
+          "input": 4,
+          "cacheWrite": 2784,
+          "cacheRead": 269463,
+          "output": 3054,
+          "tokensProcessed": 275305,
+          "costUsd": 0.13710089999999997,
+          "durationMs": 30845,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "turn": 1,
+          "tokens": 25161
+        },
+        {
+          "turn": 1,
+          "tokens": 26040
+        },
+        {
+          "turn": 1,
+          "tokens": 32773
+        },
+        {
+          "turn": 1,
+          "tokens": 42395
+        },
+        {
+          "turn": 1,
+          "tokens": 50263
+        },
+        {
+          "turn": 1,
+          "tokens": 55890
+        },
+        {
+          "turn": 1,
+          "tokens": 60749
+        },
+        {
+          "turn": 1,
+          "tokens": 65033
+        },
+        {
+          "turn": 2,
+          "tokens": 67333
+        },
+        {
+          "turn": 2,
+          "tokens": 69189
+        },
+        {
+          "turn": 2,
+          "tokens": 70203
+        },
+        {
+          "turn": 2,
+          "tokens": 71211
+        },
+        {
+          "turn": 2,
+          "tokens": 71955
+        },
+        {
+          "turn": 2,
+          "tokens": 72527
+        },
+        {
+          "turn": 3,
+          "tokens": 72789
+        },
+        {
+          "turn": 3,
+          "tokens": 77305
+        },
+        {
+          "turn": 3,
+          "tokens": 77759
+        },
+        {
+          "turn": 3,
+          "tokens": 78264
+        },
+        {
+          "turn": 3,
+          "tokens": 78721
+        },
+        {
+          "turn": 3,
+          "tokens": 79271
+        },
+        {
+          "turn": 3,
+          "tokens": 80601
+        },
+        {
+          "turn": 3,
+          "tokens": 81025
+        },
+        {
+          "turn": 4,
+          "tokens": 81295
+        },
+        {
+          "turn": 4,
+          "tokens": 82947
+        },
+        {
+          "turn": 4,
+          "tokens": 83415
+        },
+        {
+          "turn": 4,
+          "tokens": 83932
+        },
+        {
+          "turn": 4,
+          "tokens": 84856
+        },
+        {
+          "turn": 4,
+          "tokens": 85373
+        },
+        {
+          "turn": 4,
+          "tokens": 85784
+        },
+        {
+          "turn": 5,
+          "tokens": 86017
+        },
+        {
+          "turn": 5,
+          "tokens": 87090
+        },
+        {
+          "turn": 5,
+          "tokens": 87495
+        },
+        {
+          "turn": 5,
+          "tokens": 88050
+        },
+        {
+          "turn": 5,
+          "tokens": 88846
+        },
+        {
+          "turn": 6,
+          "tokens": 89142
+        },
+        {
+          "turn": 6,
+          "tokens": 89903
+        },
+        {
+          "turn": 7,
+          "tokens": 90009
+        },
+        {
+          "turn": 8,
+          "tokens": 91252
+        },
+        {
+          "turn": 8,
+          "tokens": 97050
+        },
+        {
+          "turn": 8,
+          "tokens": 97487
+        },
+        {
+          "turn": 8,
+          "tokens": 97973
+        },
+        {
+          "turn": 8,
+          "tokens": 98752
+        },
+        {
+          "turn": 9,
+          "tokens": 98997
+        },
+        {
+          "turn": 9,
+          "tokens": 101207
+        },
+        {
+          "turn": 9,
+          "tokens": 101633
+        },
+        {
+          "turn": 9,
+          "tokens": 102245
+        },
+        {
+          "turn": 9,
+          "tokens": 102687
+        },
+        {
+          "turn": 9,
+          "tokens": 103184
+        },
+        {
+          "turn": 9,
+          "tokens": 104275
+        },
+        {
+          "turn": 9,
+          "tokens": 105092
+        },
+        {
+          "turn": 10,
+          "tokens": 105346
+        },
+        {
+          "turn": 10,
+          "tokens": 107167
+        },
+        {
+          "turn": 10,
+          "tokens": 107695
+        },
+        {
+          "turn": 10,
+          "tokens": 108482
+        },
+        {
+          "turn": 10,
+          "tokens": 109253
+        },
+        {
+          "turn": 11,
+          "tokens": 109464
+        },
+        {
+          "turn": 11,
+          "tokens": 120137
+        },
+        {
+          "turn": 11,
+          "tokens": 125000
+        },
+        {
+          "turn": 11,
+          "tokens": 125668
+        },
+        {
+          "turn": 11,
+          "tokens": 126510
+        },
+        {
+          "turn": 11,
+          "tokens": 128434
+        },
+        {
+          "turn": 11,
+          "tokens": 129215
+        },
+        {
+          "turn": 11,
+          "tokens": 129970
+        },
+        {
+          "turn": 11,
+          "tokens": 130260
+        },
+        {
+          "turn": 11,
+          "tokens": 130730
+        },
+        {
+          "turn": 11,
+          "tokens": 130874
+        },
+        {
+          "turn": 12,
+          "tokens": 131743
+        },
+        {
+          "turn": 12,
+          "tokens": 132468
+        },
+        {
+          "turn": 13,
+          "tokens": 132570
+        },
+        {
+          "turn": 13,
+          "tokens": 133692
+        },
+        {
+          "turn": 13,
+          "tokens": 133939
+        },
+        {
+          "turn": 13,
+          "tokens": 134648
+        },
+        {
+          "turn": 14,
+          "tokens": 134819
+        },
+        {
+          "turn": 14,
+          "tokens": 137432
+        }
+      ],
+      "finalAnswer": "Confirmed against the actual files. Here's everything added or changed this session:\n\n## Source files\n\n**`src/core/format.ts`**\n- `formatDuration(ms): string` — new function, formats a millisecond duration compactly (`950ms` / `12s` / `3m 05s` / `1h 02m`) for display in the tooltip and sidebar card.\n- `pad(value): string` — new private helper, zero-pads seconds/minutes so `\"3m 5s\"` reads as `\"3m 05s\"`.\n\n**`src/transcript/sessionAccumulator.ts`**\n- `SessionStats.firstActivity?: number` — new field, the earliest timestamp seen in a transcript, needed to compute session length.\n- `SessionAccumulator` private field `firstActivity` — internal running minimum backing the snapshot field.\n- `touch()` — extended to also update `firstActivity` (previously only tracked `lastActivity`).\n- `snapshot()` — extended to include `firstActivity` in the returned `SessionStats`.\n\n**`src/core/sessionView.ts`**\n- `SessionView.durationMs: number` — new field, `lastActivity - firstActivity` clamped to ≥0, `0` when either end is unknown; exposes session length to the UI.\n- `SessionView.cacheHitRate: number` — new field, share of session input tokens served from the prompt cache; `0` when there were no input tokens.\n- `cacheHitRate(totals)` — new private helper computing that ratio safely (avoids divide-by-zero).\n- `toSessionView()` — extended to populate both new fields (imports `contextTokensOf` from `transcript/types` for the ratio's denominator).\n\n**`src/ui/statusBar.ts`**\n- `buildTooltip()` — extended to append a line showing session duration and cache hit rate (`\"N prompts over 3m 05s · 75% cache hit rate · active …\"`), shown only when `durationMs > 0`.\n\n**`src/webview/main.ts`**\n- `renderActive()` — extended the sidebar card's meta line to include session duration the same way, reusing `formatDuration`.\n\n**`README.md`**\n- Status bar and sidebar bullets in the Features section updated to mention session length and cache hit rate, matching what's now actually rendered.\n\n## Test files\n\n- **`test/format.test.ts`** — `formatDuration` cases, including negative-input clamping to `\"0ms\"`.\n- **`test/sessionAccumulator.test.ts`** — `firstActivity` correctness: earliest-of-many, undefined with no timestamps, single-event equals `lastActivity`, epoch-`0` timestamp treated as real, and tool-result-only entries still advance it.\n- **`test/sessionView.test.ts`** — `durationMs` (normal case, unknown cases, equal-timestamps, negative-diff clamp) and `cacheHitRate` (0.75 case, all-empty, zero-cache-reads, fully-cached).\n- **`test/sessionStore.test.ts`** — documents that `firstActivity` on a `SessionRecord` comes only from the main transcript, while `lastActivity` also merges subagent activity (intentional asymmetry, now locked in by a test).\n\nAll 115 tests pass; both typecheck projects (`.` and `src/webview`) are clean.",
+      "recall": {
+        "found": [
+          "formatDuration",
+          "firstActivity",
+          "durationMs",
+          "cacheHitRate",
+          "format.ts",
+          "sessionAccumulator.ts",
+          "sessionView.ts",
+          "statusBar.ts",
+          "main.ts",
+          "README.md"
+        ],
+        "missing": []
+      },
+      "verification": {
+        "tests": {
+          "ok": true,
+          "summary": "\u001b[22m \u001b[1m\u001b[32m115 passed\u001b[39m\u001b[22m\u001b[90m (115)\u001b[39m"
+        },
+        "typecheck": {
+          "ok": true,
+          "summary": "passed"
+        }
+      },
+      "wallMs": 519137
+    },
+    "vizzer": {
+      "label": "With Vizzer (handoff after turn 7)",
+      "status": "done",
+      "turns": [
+        {
+          "turn": 1,
+          "segment": 1,
+          "sessionId": "4e87980e-6fca-4ad9-94c6-811c9bfd3faf",
+          "contextEnd": 34221,
+          "requests": 4,
+          "input": 53,
+          "cacheWrite": 77096,
+          "cacheRead": 232100,
+          "output": 7600,
+          "tokensProcessed": 316849,
+          "costUsd": 0.2906673,
+          "durationMs": 89627,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-haiku-4-5-20251001",
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 2,
+          "segment": 1,
+          "sessionId": "4e87980e-6fca-4ad9-94c6-811c9bfd3faf",
+          "contextEnd": 42877,
+          "requests": 8,
+          "input": 16,
+          "cacheWrite": 8656,
+          "cacheRead": 308597,
+          "output": 4087,
+          "tokensProcessed": 321356,
+          "costUsd": 0.1863921,
+          "durationMs": 45160,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 3,
+          "segment": 1,
+          "sessionId": "4e87980e-6fca-4ad9-94c6-811c9bfd3faf",
+          "contextEnd": 55934,
+          "requests": 12,
+          "input": 24,
+          "cacheWrite": 13057,
+          "cacheRead": 602846,
+          "output": 4204,
+          "tokensProcessed": 620131,
+          "costUsd": 0.29294955,
+          "durationMs": 53463,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 4,
+          "segment": 1,
+          "sessionId": "4e87980e-6fca-4ad9-94c6-811c9bfd3faf",
+          "contextEnd": 64079,
+          "requests": 11,
+          "input": 22,
+          "cacheWrite": 8145,
+          "cacheRead": 660857,
+          "output": 3102,
+          "tokensProcessed": 672126,
+          "costUsd": 0.27539684999999997,
+          "durationMs": 42052,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 5,
+          "segment": 1,
+          "sessionId": "4e87980e-6fca-4ad9-94c6-811c9bfd3faf",
+          "contextEnd": 68829,
+          "requests": 5,
+          "input": 10,
+          "cacheWrite": 4750,
+          "cacheRead": 330411,
+          "output": 1483,
+          "tokensProcessed": 336654,
+          "costUsd": 0.1392108,
+          "durationMs": 21112,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 6,
+          "segment": 1,
+          "sessionId": "4e87980e-6fca-4ad9-94c6-811c9bfd3faf",
+          "contextEnd": 69838,
+          "requests": 2,
+          "input": 4,
+          "cacheWrite": 1009,
+          "cacheRead": 137911,
+          "output": 179,
+          "tokensProcessed": 139103,
+          "costUsd": 0.047854049999999995,
+          "durationMs": 5797,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 7,
+          "segment": 1,
+          "sessionId": "4e87980e-6fca-4ad9-94c6-811c9bfd3faf",
+          "contextEnd": 69942,
+          "requests": 1,
+          "input": 2,
+          "cacheWrite": 104,
+          "cacheRead": 69836,
+          "output": 675,
+          "tokensProcessed": 70617,
+          "costUsd": 0.0314718,
+          "durationMs": 7226,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 8,
+          "segment": 2,
+          "sessionId": "4660342d-8396-471d-95dc-c53d75af5180",
+          "contextEnd": 42392,
+          "requests": 9,
+          "input": 18,
+          "cacheWrite": 23137,
+          "cacheRead": 314893,
+          "output": 3039,
+          "tokensProcessed": 341087,
+          "costUsd": 0.22738264999999996,
+          "durationMs": 36297,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-haiku-4-5-20251001",
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 9,
+          "segment": 2,
+          "sessionId": "4660342d-8396-471d-95dc-c53d75af5180",
+          "contextEnd": 50199,
+          "requests": 10,
+          "input": 20,
+          "cacheWrite": 7807,
+          "cacheRead": 464559,
+          "output": 3127,
+          "tokensProcessed": 475513,
+          "costUsd": 0.21560894999999997,
+          "durationMs": 42216,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 10,
+          "segment": 2,
+          "sessionId": "4660342d-8396-471d-95dc-c53d75af5180",
+          "contextEnd": 54559,
+          "requests": 4,
+          "input": 8,
+          "cacheWrite": 4360,
+          "cacheRead": 207398,
+          "output": 2507,
+          "tokensProcessed": 214273,
+          "costUsd": 0.11619839999999998,
+          "durationMs": 30842,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 11,
+          "segment": 2,
+          "sessionId": "4660342d-8396-471d-95dc-c53d75af5180",
+          "contextEnd": 77629,
+          "requests": 13,
+          "input": 26,
+          "cacheWrite": 23070,
+          "cacheRead": 841278,
+          "output": 14766,
+          "tokensProcessed": 879140,
+          "costUsd": 0.5604639,
+          "durationMs": 171249,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 12,
+          "segment": 2,
+          "sessionId": "4660342d-8396-471d-95dc-c53d75af5180",
+          "contextEnd": 79403,
+          "requests": 2,
+          "input": 4,
+          "cacheWrite": 1774,
+          "cacheRead": 156083,
+          "output": 181,
+          "tokensProcessed": 158042,
+          "costUsd": 0.0562044,
+          "durationMs": 5907,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 13,
+          "segment": 2,
+          "sessionId": "4660342d-8396-471d-95dc-c53d75af5180",
+          "contextEnd": 81885,
+          "requests": 4,
+          "input": 8,
+          "cacheWrite": 2482,
+          "cacheRead": 319306,
+          "output": 1419,
+          "tokensProcessed": 323215,
+          "costUsd": 0.1264083,
+          "durationMs": 19363,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        },
+        {
+          "turn": 14,
+          "segment": 2,
+          "sessionId": "4660342d-8396-471d-95dc-c53d75af5180",
+          "contextEnd": 84810,
+          "requests": 2,
+          "input": 4,
+          "cacheWrite": 2925,
+          "cacheRead": 163938,
+          "output": 2872,
+          "tokensProcessed": 169739,
+          "costUsd": 0.10324214999999999,
+          "durationMs": 27738,
+          "isError": false,
+          "compactionsSoFar": 0,
+          "models": [
+            "claude-sonnet-5"
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "turn": 1,
+          "tokens": 25163
+        },
+        {
+          "turn": 1,
+          "tokens": 27825
+        },
+        {
+          "turn": 1,
+          "tokens": 32222
+        },
+        {
+          "turn": 1,
+          "tokens": 34221
+        },
+        {
+          "turn": 2,
+          "tokens": 35822
+        },
+        {
+          "turn": 2,
+          "tokens": 36786
+        },
+        {
+          "turn": 2,
+          "tokens": 37662
+        },
+        {
+          "turn": 2,
+          "tokens": 38660
+        },
+        {
+          "turn": 2,
+          "tokens": 41266
+        },
+        {
+          "turn": 2,
+          "tokens": 41723
+        },
+        {
+          "turn": 2,
+          "tokens": 42473
+        },
+        {
+          "turn": 2,
+          "tokens": 42877
+        },
+        {
+          "turn": 3,
+          "tokens": 43176
+        },
+        {
+          "turn": 3,
+          "tokens": 46244
+        },
+        {
+          "turn": 3,
+          "tokens": 48369
+        },
+        {
+          "turn": 3,
+          "tokens": 50512
+        },
+        {
+          "turn": 3,
+          "tokens": 51232
+        },
+        {
+          "turn": 3,
+          "tokens": 51736
+        },
+        {
+          "turn": 3,
+          "tokens": 52195
+        },
+        {
+          "turn": 3,
+          "tokens": 52759
+        },
+        {
+          "turn": 3,
+          "tokens": 54080
+        },
+        {
+          "turn": 3,
+          "tokens": 54565
+        },
+        {
+          "turn": 3,
+          "tokens": 55125
+        },
+        {
+          "turn": 3,
+          "tokens": 55934
+        },
+        {
+          "turn": 4,
+          "tokens": 56368
+        },
+        {
+          "turn": 4,
+          "tokens": 58199
+        },
+        {
+          "turn": 4,
+          "tokens": 58632
+        },
+        {
+          "turn": 4,
+          "tokens": 59120
+        },
+        {
+          "turn": 4,
+          "tokens": 59622
+        },
+        {
+          "turn": 4,
+          "tokens": 60954
+        },
+        {
+          "turn": 4,
+          "tokens": 61851
+        },
+        {
+          "turn": 4,
+          "tokens": 62776
+        },
+        {
+          "turn": 4,
+          "tokens": 63521
+        },
+        {
+          "turn": 4,
+          "tokens": 63902
+        },
+        {
+          "turn": 4,
+          "tokens": 64079
+        },
+        {
+          "turn": 5,
+          "tokens": 64317
+        },
+        {
+          "turn": 5,
+          "tokens": 66667
+        },
+        {
+          "turn": 5,
+          "tokens": 67402
+        },
+        {
+          "turn": 5,
+          "tokens": 67956
+        },
+        {
+          "turn": 5,
+          "tokens": 68829
+        },
+        {
+          "turn": 6,
+          "tokens": 69086
+        },
+        {
+          "turn": 6,
+          "tokens": 69838
+        },
+        {
+          "turn": 7,
+          "tokens": 69942
+        },
+        {
+          "turn": 8,
+          "tokens": 27763
+        },
+        {
+          "turn": 8,
+          "tokens": 29588
+        },
+        {
+          "turn": 8,
+          "tokens": 33919
+        },
+        {
+          "turn": 8,
+          "tokens": 39647
+        },
+        {
+          "turn": 8,
+          "tokens": 40545
+        },
+        {
+          "turn": 8,
+          "tokens": 41007
+        },
+        {
+          "turn": 8,
+          "tokens": 41493
+        },
+        {
+          "turn": 8,
+          "tokens": 41694
+        },
+        {
+          "turn": 8,
+          "tokens": 42392
+        },
+        {
+          "turn": 9,
+          "tokens": 42955
+        },
+        {
+          "turn": 9,
+          "tokens": 45158
+        },
+        {
+          "turn": 9,
+          "tokens": 46141
+        },
+        {
+          "turn": 9,
+          "tokens": 46767
+        },
+        {
+          "turn": 9,
+          "tokens": 47223
+        },
+        {
+          "turn": 9,
+          "tokens": 47686
+        },
+        {
+          "turn": 9,
+          "tokens": 48210
+        },
+        {
+          "turn": 9,
+          "tokens": 48623
+        },
+        {
+          "turn": 9,
+          "tokens": 49424
+        },
+        {
+          "turn": 9,
+          "tokens": 50199
+        },
+        {
+          "turn": 10,
+          "tokens": 50484
+        },
+        {
+          "turn": 10,
+          "tokens": 52982
+        },
+        {
+          "turn": 10,
+          "tokens": 53741
+        },
+        {
+          "turn": 10,
+          "tokens": 54559
+        },
+        {
+          "turn": 11,
+          "tokens": 54796
+        },
+        {
+          "turn": 11,
+          "tokens": 55990
+        },
+        {
+          "turn": 11,
+          "tokens": 56574
+        },
+        {
+          "turn": 11,
+          "tokens": 59416
+        },
+        {
+          "turn": 11,
+          "tokens": 60134
+        },
+        {
+          "turn": 11,
+          "tokens": 60564
+        },
+        {
+          "turn": 11,
+          "tokens": 70439
+        },
+        {
+          "turn": 11,
+          "tokens": 71078
+        },
+        {
+          "turn": 11,
+          "tokens": 71690
+        },
+        {
+          "turn": 11,
+          "tokens": 74230
+        },
+        {
+          "turn": 11,
+          "tokens": 75120
+        },
+        {
+          "turn": 11,
+          "tokens": 76714
+        },
+        {
+          "turn": 11,
+          "tokens": 77629
+        },
+        {
+          "turn": 12,
+          "tokens": 78458
+        },
+        {
+          "turn": 12,
+          "tokens": 79403
+        },
+        {
+          "turn": 13,
+          "tokens": 79505
+        },
+        {
+          "turn": 13,
+          "tokens": 79735
+        },
+        {
+          "turn": 13,
+          "tokens": 80671
+        },
+        {
+          "turn": 13,
+          "tokens": 81885
+        },
+        {
+          "turn": 14,
+          "tokens": 82057
+        },
+        {
+          "turn": 14,
+          "tokens": 84810
+        }
+      ],
+      "handoff": {
+        "afterTurn": 7,
+        "sourceSessionId": "4e87980e-6fca-4ad9-94c6-811c9bfd3faf",
+        "newSessionId": "4660342d-8396-471d-95dc-c53d75af5180",
+        "contextBefore": 69942,
+        "digestChars": 9312,
+        "digestCondensed": false,
+        "handoffChars": 4818,
+        "tokensProcessed": 6942,
+        "costUsd": 0.024300000000000002,
+        "durationMs": 35517,
+        "file": ".vizzer/handoffs/2026-09-11-2120-review-system-architecture-and-data-flow.md",
+        "contextAfter": 27763
+      },
+      "finalAnswer": "Confirmed. Here's everything added or changed this session, no unmodified/pre-existing code included:\n\n**`src/webview/main.ts`**\n- `renderDuration(session)` — new function; formats session length for the sidebar card, reusing `formatDuration` instead of duplicating status-bar logic.\n- Meta line template (`<p class=\"meta\">…`) — wired `renderDuration(session)` into it so the card shows session length.\n- Import of `formatDuration` from `../core/format` — needed by the above.\n\n**`src/core/sessionView.ts`**\n- `SessionView.cacheHitRate: number` field — new field so UI code can display prompt cache effectiveness without recomputing it per-consumer.\n- `cacheHitRate(totals)` — new private helper; computes `cacheRead / (input+cacheWrite+cacheRead)`, returns `0` when there's no input data, avoiding a `NaN`.\n- `toSessionView` return object — added `cacheHitRate: cacheHitRate(record.totals)` to populate the field.\n- Import of `contextTokensOf` from `../transcript/types` — reused the existing \"total input tokens\" helper instead of re-deriving it.\n\n**`src/ui/statusBar.ts`**\n- `buildTooltip` — added a `cacheHitRate` segment to the prompt-count line, showing the rate as a percentage next to session length.\n- Gate condition — changed from `view.cacheHitRate > 0` to `contextTokensOf(view.totals) > 0`, so a session with real tokens but a genuine 0% hit rate still displays it instead of being mistaken for \"no data.\"\n- Import of `contextTokensOf` — needed for the corrected gate.\n\n**`test/sessionView.test.ts`**\n- `computes cacheHitRate as cacheRead over all input tokens` — verifies the core ratio math.\n- `defaults cacheHitRate to 0 when there are no input tokens` — verifies the zero-denominator fallback (no `NaN`).\n- `computes cacheHitRate as 1 when every input token was a cache read` — boundary case, all-cache session.\n- `computes cacheHitRate as 0 when there are input tokens but none were cache reads` — the case that exposed the status-bar gating bug; documents it's a valid, real `0`, not just the \"no data\" fallback.\n\n**`README.md`**\n- Status bar Features bullet — now mentions the hover tooltip shows session length and cache hit rate.\n- Sidebar panel Features bullet — now mentions session length is shown on the card (cache hit rate intentionally omitted here, since it's status-bar-only).",
+      "recall": {
+        "found": [
+          "formatDuration",
+          "cacheHitRate",
+          "sessionView.ts",
+          "statusBar.ts",
+          "main.ts",
+          "README.md"
+        ],
+        "missing": [
+          "firstActivity",
+          "durationMs",
+          "format.ts",
+          "sessionAccumulator.ts"
+        ]
+      },
+      "verification": {
+        "tests": {
+          "ok": true,
+          "summary": "\u001b[22m \u001b[1m\u001b[32m110 passed\u001b[39m\u001b[22m\u001b[90m (110)\u001b[39m"
+        },
+        "typecheck": {
+          "ok": true,
+          "summary": "passed"
+        }
+      },
+      "wallMs": 645200
+    }
+  },
+  "finishedAt": "2026-09-11T15:56:13.944Z"
+}

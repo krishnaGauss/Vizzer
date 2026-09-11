@@ -10,3 +10,5 @@ eslint.config.mjs
 vitest.config.ts
 tsconfig.json
 .vizzer/**
+bench/**
+docs/**

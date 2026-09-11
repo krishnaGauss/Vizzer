@@ -30,6 +30,16 @@ describe('parsePrintOutput', () => {
     expect(parsePrintOutput(stdout, 0)).toEqual({ text: '# Handoff', costUsd: 0.01, durationMs: 1_200 });
   });
 
+  it('reports token usage when claude includes it', () => {
+    const stdout = JSON.stringify({
+      type: 'result',
+      is_error: false,
+      result: 'ok',
+      usage: { input_tokens: 10, cache_creation_input_tokens: 20, cache_read_input_tokens: 30, output_tokens: 40 },
+    });
+    expect(parsePrintOutput(stdout, 0).usage).toEqual({ input: 10, cacheWrite: 20, cacheRead: 30, output: 40 });
+  });
+
   it('surfaces errors reported by claude', () => {
     const stdout = JSON.stringify({ type: 'result', is_error: true, result: 'Not logged in' });
     expect(() => parsePrintOutput(stdout, 1)).toThrowError(new ClaudeCliError('failed', 'Not logged in'));

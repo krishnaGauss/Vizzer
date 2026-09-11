@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-09-11T15:44:57.548Z",
+  "node": "v24.13.0",
+  "platform": "darwin 24.6.0 arm64",
+  "samples": [
+    {
+      "sizeMb": 1,
+      "fileBytes": 1058128,
+      "loadMs": 5.833042000000001,
+      "cpuMs": 7.672,
+      "heapMb": 0.36690521240234375,
+      "rssMb": 7.4375,
+      "idleScanMs": 0.23045799999999872,
+      "updateLatencyMedianMs": 134.41395899999998,
+      "updateLatencyP95Ms": 135.55870800000002
+    },
+    {
+      "sizeMb": 10,
+      "fileBytes": 10492692,
+      "loadMs": 21.075292000000005,
+      "cpuMs": 33.337,
+      "heapMb": 1.2722549438476562,
+      "rssMb": 44.5,
+      "idleScanMs": 0.3272919999999999,
+      "updateLatencyMedianMs": 134.928417,
+      "updateLatencyP95Ms": 135.71854199999996
+    },
+    {
+      "sizeMb": 50,
+      "fileBytes": 52437548,
+      "loadMs": 85.783083,
+      "cpuMs": 123.308,
+      "heapMb": 5.2538604736328125,
+      "rssMb": 188.25,
+      "idleScanMs": 0.38870799999999406,
+      "updateLatencyMedianMs": 136.520041,
+      "updateLatencyP95Ms": 137.546375
+    }
+  ]
+}
