@@ -1,0 +1,220 @@
+{
+  "name": "vizzer",
+  "displayName": "Vizzer — Claude Code Token Visualizer",
+  "description": "Live per-session token and context usage for Claude Code, with one-click Haiku handoffs into a fresh session.",
+  "version": "0.1.0",
+  "publisher": "vizzer",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Visualization",
+    "AI",
+    "Other"
+  ],
+  "keywords": [
+    "claude",
+    "claude code",
+    "anthropic",
+    "tokens",
+    "context window",
+    "handoff"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vizzer",
+          "title": "Vizzer",
+          "icon": "media/vizzer.svg"
+        }
+      ]
+    },
+    "views": {
+      "vizzer": [
+        {
+          "type": "webview",
+          "id": "vizzer.sessions",
+          "name": "Sessions"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "vizzer.showPanel",
+        "title": "Show Token Panel",
+        "category": "Vizzer"
+      },
+      {
+        "command": "vizzer.createHandoff",
+        "title": "Create Handoff for Current Session",
+        "category": "Vizzer",
+        "icon": "$(arrow-swap)"
+      },
+      {
+        "command": "vizzer.startSessionFromHandoff",
+        "title": "Start New Claude Session from This Handoff",
+        "category": "Vizzer",
+        "icon": "$(play)"
+      },
+      {
+        "command": "vizzer.selectSession",
+        "title": "Select Session…",
+        "category": "Vizzer",
+        "icon": "$(list-selection)"
+      },
+      {
+        "command": "vizzer.followLatest",
+        "title": "Follow Most Recent Session",
+        "category": "Vizzer"
+      },
+      {
+        "command": "vizzer.openTranscript",
+        "title": "Open Session Transcript",
+        "category": "Vizzer"
+      },
+      {
+        "command": "vizzer.refresh",
+        "title": "Refresh",
+        "category": "Vizzer",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "vizzer.selectSession",
+          "when": "view == vizzer.sessions",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vizzer.refresh",
+          "when": "view == vizzer.sessions",
+          "group": "navigation@2"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "vizzer.startSessionFromHandoff",
+          "when": "resourcePath =~ /\\.vizzer[\\/\\\\]handoffs[\\/\\\\][^\\/\\\\]+\\.md$/",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Vizzer",
+      "properties": {
+        "vizzer.thresholds.warnTokens": {
+          "type": "number",
+          "default": 150000,
+          "minimum": 1000,
+          "markdownDescription": "Warn when a session re-sends at least this many context tokens per message."
+        },
+        "vizzer.thresholds.criticalTokens": {
+          "type": "number",
+          "default": 300000,
+          "minimum": 1000,
+          "markdownDescription": "Mark a session critical (and suggest a handoff) at this many context tokens per message."
+        },
+        "vizzer.thresholds.warnPercent": {
+          "type": "number",
+          "default": 60,
+          "minimum": 1,
+          "maximum": 100,
+          "markdownDescription": "Warn when the context window is at least this full (percent)."
+        },
+        "vizzer.thresholds.criticalPercent": {
+          "type": "number",
+          "default": 80,
+          "minimum": 1,
+          "maximum": 100,
+          "markdownDescription": "Mark a session critical when the context window is at least this full (percent)."
+        },
+        "vizzer.notifications.enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Show a notification offering a handoff when a session crosses a threshold."
+        },
+        "vizzer.contextWindowOverride": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "markdownDescription": "Force the context window size in tokens (e.g. `200000` or `1000000`). `0` detects it from the model."
+        },
+        "vizzer.claudeConfigDir": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Claude Code config directory. Empty uses `CLAUDE_CONFIG_DIR` or `~/.claude`."
+        },
+        "vizzer.claudePath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Path to the `claude` CLI used to generate handoffs. Empty searches `PATH` and common install locations."
+        },
+        "vizzer.handoff.model": {
+          "type": "string",
+          "default": "haiku",
+          "markdownDescription": "Model alias or ID used to write handoff files."
+        },
+        "vizzer.handoff.maxDigestTokens": {
+          "type": "number",
+          "default": 60000,
+          "minimum": 5000,
+          "maximum": 150000,
+          "markdownDescription": "Approximate token budget for the condensed transcript sent to the handoff model."
+        },
+        "vizzer.handoff.openIn": {
+          "type": "string",
+          "enum": [
+            "claudeExtension",
+            "terminal"
+          ],
+          "enumDescriptions": [
+            "Open a new tab in the Claude Code extension with the prompt pre-filled.",
+            "Start `claude` in an integrated terminal."
+          ],
+          "default": "claudeExtension",
+          "markdownDescription": "Where to start the new session after a handoff."
+        },
+        "vizzer.sessions.historyDays": {
+          "type": "number",
+          "default": 7,
+          "minimum": 1,
+          "markdownDescription": "Only load sessions active within this many days."
+        },
+        "vizzer.sessions.maxSessions": {
+          "type": "number",
+          "default": 25,
+          "minimum": 1,
+          "markdownDescription": "Maximum number of sessions to track per workspace."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p src/webview",
+    "lint": "eslint src test",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run lint && npm test",
+    "vscode:prepublish": "npm run typecheck && node esbuild.mjs --production",
+    "package": "vsce package --no-dependencies --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/node": "^20.17.0",
+    "@types/vscode": "~1.90.0",
+    "@vscode/vsce": "^3.2.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.15.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.15.0",
+    "vitest": "^2.1.0"
+  }
+}
