@@ -1,8 +1,9 @@
 {
   "name": "vizzer",
-  "displayName": "Vizzer — Claude Code Token Visualizer",
-  "description": "Live per-session token and context usage for Claude Code, with one-click Haiku handoffs into a fresh session.",
-  "version": "0.1.0",
+  "icon": "media/logo.png",
+  "displayName": "Vizzer — Claude Token Optimizer & Visualizer",
+  "description": "Live per-session token and context usage for Claude Code, with one-click Haiku handoffs into a fresh session, for context length and token optimization.",
+  "version": "0.1.1",
   "publisher": "vizzer",
   "license": "MIT",
   "repository": {
