@@ -7,6 +7,8 @@ export interface WebviewState {
   activeId?: string;
   following: boolean;
   thresholds: Thresholds;
+  /** `vizzer.handoff.model`: the alias or model ID that writes handoffs. */
+  handoffModel: string;
 }
 
 export type HostToWebviewMessage = { type: 'state'; state: WebviewState };
@@ -16,5 +18,6 @@ export type WebviewToHostMessage =
   | { type: 'select'; id: string }
   | { type: 'follow' }
   | { type: 'handoff'; id: string }
+  | { type: 'selectHandoffModel' }
   | { type: 'openTranscript'; id: string }
   | { type: 'openSettings' };

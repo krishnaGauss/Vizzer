@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { DEFAULT_THRESHOLDS, type Thresholds } from './core/levels';
+import { DEFAULT_HANDOFF_MODEL } from './handoff/handoffModels';
 
 export const CONFIG_SECTION = 'vizzer';
 
@@ -23,7 +24,6 @@ export interface VizzerConfig {
   };
 }
 
-const DEFAULT_HANDOFF_MODEL = 'haiku';
 const DEFAULT_DIGEST_TOKENS = 60_000;
 const DEFAULT_HISTORY_DAYS = 7;
 const DEFAULT_MAX_SESSIONS = 25;

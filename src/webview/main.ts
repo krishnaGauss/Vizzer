@@ -1,6 +1,7 @@
 import { formatPercent, formatRelativeTime, formatTokens } from '../core/format';
 import type { Thresholds, UsageLevel } from '../core/levels';
 import type { SessionView } from '../core/sessionView';
+import { handoffModelDescription, handoffModelLabel } from '../handoff/handoffModels';
 import { totalTokensOf, type TokenUsage } from '../transcript/types';
 import type { HostToWebviewMessage, WebviewState, WebviewToHostMessage } from '../ui/webviewProtocol';
 
@@ -47,6 +48,7 @@ root.addEventListener('click', (event) => {
       break;
     case 'follow':
     case 'openSettings':
+    case 'selectHandoffModel':
       vscode.postMessage({ type: action });
       break;
   }
@@ -64,7 +66,9 @@ function render(): void {
   } else {
     const current = state;
     const active = current.sessions.find((session) => session.id === current.activeId) ?? current.sessions[0];
-    root.innerHTML = renderActive(active, current.thresholds) + renderList(current.sessions, active.id, current.following);
+    root.innerHTML =
+      renderActive(active, current.thresholds, current.handoffModel) +
+      renderList(current.sessions, active.id, current.following);
   }
 
   applyGeometry();
@@ -89,7 +93,7 @@ function applyGeometry(): void {
   });
 }
 
-function renderActive(session: SessionView, thresholds: Thresholds): string {
+function renderActive(session: SessionView, thresholds: Thresholds, handoffModel: string): string {
   const percent = clampPercent(session.percent);
   const warnAt = effectiveThresholdPercent(thresholds.warnPercent, thresholds.warnTokens, session.contextWindow);
   const criticalAt = effectiveThresholdPercent(thresholds.criticalPercent, thresholds.criticalTokens, session.contextWindow);
@@ -128,7 +132,20 @@ function renderActive(session: SessionView, thresholds: Thresholds): string {
         </button>
         <button class="button secondary" data-action="openTranscript" data-id="${escapeHtml(session.id)}">Transcript</button>
       </div>
+      ${renderHandoffModel(handoffModel)}
     </section>`;
+}
+
+/** Which model writes the handoff, with a one-click way to change it. */
+function renderHandoffModel(handoffModel: string): string {
+  // State persisted by an older version of the webview may not carry the model yet.
+  const model = handoffModel ?? '';
+  const description = handoffModelDescription(model);
+  return `
+    <p class="handoff-model">
+      <span>Written by <strong>${escapeHtml(handoffModelLabel(model))}</strong>${description ? ` · ${escapeHtml(description.toLowerCase())}` : ''}</span>
+      <button class="link" data-action="selectHandoffModel" title="Choose the model that writes handoffs">Change</button>
+    </p>`;
 }
 
 function renderAdvice(session: SessionView, thresholds: Thresholds): string {

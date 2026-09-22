@@ -247,6 +247,22 @@ body {
 
 .button.secondary:hover { background: var(--vscode-button-secondaryHoverBackground); }
 
+.handoff-model {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 10px;
+  margin: 8px 0 0;
+  color: var(--vz-muted);
+  font-size: 0.82em;
+}
+
+.handoff-model strong {
+  color: var(--vscode-foreground);
+  font-weight: 600;
+}
+
 .link {
   padding: 0;
   border: none;

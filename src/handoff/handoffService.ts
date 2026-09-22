@@ -8,10 +8,12 @@ import type { SessionView } from '../core/sessionView';
 import { ClaudeCliError, resolveClaudeBinary, runClaudePrint } from './claudeCli';
 import { buildDigest } from './digest';
 import { writeHandoffFile } from './handoffFile';
+import { handoffModelLabel } from './handoffModels';
 import { CHARS_PER_TOKEN, HANDOFF_SYSTEM_PROMPT, buildContinuationPrompt, buildHandoffRequest } from './prompt';
 import { launchClaudeSession } from './sessionLauncher';
 
-const HANDOFF_TIMEOUT_MS = 180_000;
+/** Generous enough for the largest digest on the slowest model; the progress notification stays cancellable. */
+const HANDOFF_TIMEOUT_MS = 300_000;
 const ACTION_START_SESSION = 'Start new session';
 
 export interface HandoffServiceDeps {
@@ -115,7 +117,7 @@ export class HandoffService {
       const binary = await resolveClaudeBinary({ configuredPath: config.claudePath });
       throwIfCancelled();
 
-      progress.report({ message: `Asking ${config.handoff.model} to write the handoff…` });
+      progress.report({ message: `Asking ${handoffModelLabel(config.handoff.model)} to write the handoff…` });
       const workDir = this.deps.storageUri.fsPath;
       await fs.mkdir(workDir, { recursive: true });
       const startedAt = Date.now();

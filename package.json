@@ -2,7 +2,7 @@
   "name": "vizzer",
   "icon": "media/logo.png",
   "displayName": "Vizzer — Claude Token Optimizer & Visualizer",
-  "description": "Live per-session token and context usage for Claude Code, with one-click Haiku handoffs into a fresh session, for context length and token optimization.",
+  "description": "Live per-session token and context usage for Claude Code, with one-click handoffs into a fresh session (written by Opus by default, or any model you pick), for context length and token optimization.",
   "version": "0.1.2",
   "publisher": "vizzer",
   "license": "MIT",
@@ -72,6 +72,12 @@
         "icon": "$(play)"
       },
       {
+        "command": "vizzer.selectHandoffModel",
+        "title": "Choose Model That Writes Handoffs…",
+        "category": "Vizzer",
+        "icon": "$(sparkle)"
+      },
+      {
         "command": "vizzer.selectSession",
         "title": "Select Session…",
         "category": "Vizzer",
@@ -97,14 +103,19 @@
     "menus": {
       "view/title": [
         {
-          "command": "vizzer.selectSession",
+          "command": "vizzer.selectHandoffModel",
           "when": "view == vizzer.sessions",
           "group": "navigation@1"
         },
         {
-          "command": "vizzer.refresh",
+          "command": "vizzer.selectSession",
           "when": "view == vizzer.sessions",
           "group": "navigation@2"
+        },
+        {
+          "command": "vizzer.refresh",
+          "when": "view == vizzer.sessions",
+          "group": "navigation@3"
         }
       ],
       "editor/title": [
@@ -167,8 +178,8 @@
         },
         "vizzer.handoff.model": {
           "type": "string",
-          "default": "haiku",
-          "markdownDescription": "Model alias or ID used to write handoff files."
+          "default": "opus",
+          "markdownDescription": "Model that writes handoff files. `opus` (default) keeps the most detail, `sonnet` is a faster middle ground and `haiku` is the quickest and cheapest. A full model ID such as `claude-sonnet-5` also works. Run **Vizzer: Choose Model That Writes Handoffs…** to pick one from a list."
         },
         "vizzer.handoff.maxDigestTokens": {
           "type": "number",

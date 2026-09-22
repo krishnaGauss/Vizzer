@@ -1,6 +1,6 @@
 # Vizzer — Claude Code token visualizer
 
-Vizzer shows, live, how many tokens each **Claude Code session** in your workspace is carrying, which model it runs on, and when the context has grown large enough that you'd be better off in a fresh session. When that point comes, one click has **Haiku** write a handoff document, and Vizzer opens a new Claude Code session that continues from it.
+Vizzer shows, live, how many tokens each **Claude Code session** in your workspace is carrying, which model it runs on, and when the context has grown large enough that you'd be better off in a fresh session. When that point comes, one click has **Opus** — or whichever model you pick — write a handoff document, and Vizzer opens a new Claude Code session that continues from it.
 
 Account-level meters tell you how much of your plan you've used. Vizzer shows the per-session number behind that: every message in a session re-sends the whole context, so a 400k-token session costs about 400k input tokens per turn, cached or not.
 
@@ -10,10 +10,11 @@ Account-level meters tell you how much of your plan you've used. Vizzer shows th
 - **Sidebar panel**: a card for the focused session with a context gauge, a per-response context chart (compactions marked), token totals, and subagent usage. Below it is a list of every recent session in the workspace. Click one to pin it.
 - **Handoff advice**: Vizzer warns once when a live session re-sends more than a set number of tokens per message (default 150k, critical at 300k) or fills a set share of its window (60% / 80%), whichever comes first. Warnings can be snoozed or muted per session.
 - **One-click handoff**:
-  1. Vizzer condenses the transcript locally (the goal, recent activity, files edited, the latest todo list) to fit Haiku's window.
-  2. It runs `claude -p --model haiku` with your existing Claude Code login. No API key is needed, and no extra session is recorded.
+  1. Vizzer condenses the transcript locally (the goal, recent activity, files edited, the latest todo list) to fit the handoff model's window.
+  2. It runs `claude -p --model opus` with your existing Claude Code login. No API key is needed, and no extra session is recorded.
   3. It saves the document to `.vizzer/handoffs/<date>-<title>.md` and opens it for you to review.
   4. It opens a new Claude Code tab with a prompt pre-filled to continue from the handoff. You press Enter.
+- **Pick the handoff model**: handoffs are written by **Opus** by default, because the one document the next session reads is worth the best model. Choose **Sonnet** for a faster middle ground, **Haiku** for the quickest and cheapest write-up, or enter any model ID. Change it from the *Written by …* line in the sidebar card, the sparkle icon in the panel title, or **Vizzer: Choose Model That Writes Handoffs…**.
 
 ## Benchmark
 
@@ -122,7 +123,7 @@ Transcripts don't record the window size. Vizzer infers it from the model (Haiku
 | `vizzer.contextWindowOverride` | `0` | Force a window size in tokens (`0` = detect). |
 | `vizzer.claudeConfigDir` | `""` | Claude config directory (defaults to `CLAUDE_CONFIG_DIR` or `~/.claude`). |
 | `vizzer.claudePath` | `""` | Path to the `claude` CLI (defaults to PATH and common install locations). |
-| `vizzer.handoff.model` | `haiku` | Model that writes handoffs. |
+| `vizzer.handoff.model` | `opus` | Model that writes handoffs (`opus`, `sonnet`, `haiku` or a full model ID). |
 | `vizzer.handoff.maxDigestTokens` | `60000` | Budget for the condensed transcript sent to that model. |
 | `vizzer.handoff.openIn` | `claudeExtension` | Open the new session in the Claude Code extension or a terminal. |
 | `vizzer.sessions.historyDays` | `7` | Only load sessions active within this many days. |
@@ -133,6 +134,7 @@ Transcripts don't record the window size. Vizzer infers it from the model (Haiku
 - **Vizzer: Show Token Panel**
 - **Vizzer: Create Handoff for Current Session**
 - **Vizzer: Start New Claude Session from This Handoff**: also in the editor title bar when a handoff file is open
+- **Vizzer: Choose Model That Writes Handoffs…**: Opus, Sonnet, Haiku or a model ID of your own
 - **Vizzer: Select Session…** / **Follow Most Recent Session**
 - **Vizzer: Open Session Transcript**
 - **Vizzer: Refresh**

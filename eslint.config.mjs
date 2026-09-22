@@ -10,6 +10,7 @@ const PURE_MODULES = [
   'src/handoff/prompt.ts',
   'src/handoff/claudeCli.ts',
   'src/handoff/handoffFile.ts',
+  'src/handoff/handoffModels.ts',
 ];
 
 export default tseslint.config(

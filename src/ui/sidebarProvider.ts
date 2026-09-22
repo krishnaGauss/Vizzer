@@ -66,6 +66,9 @@ export class SessionsViewProvider implements vscode.WebviewViewProvider, vscode.
       case 'openTranscript':
         void vscode.commands.executeCommand(COMMANDS.openTranscript, sessionId);
         break;
+      case 'selectHandoffModel':
+        void vscode.commands.executeCommand(COMMANDS.selectHandoffModel);
+        break;
       case 'openSettings':
         void vscode.commands.executeCommand('workbench.action.openSettings', `@ext:${EXTENSION_ID}`);
         break;
@@ -89,6 +92,7 @@ export class SessionsViewProvider implements vscode.WebviewViewProvider, vscode.
         activeId: this.controller.getActiveView()?.id,
         following: this.controller.isFollowingLatest,
         thresholds: this.getConfig().thresholds,
+        handoffModel: this.getConfig().handoff.model,
       },
     };
     void this.view.webview.postMessage(message);
