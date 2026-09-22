@@ -3,7 +3,7 @@
   "icon": "media/logo.png",
   "displayName": "Vizzer — Claude Token Optimizer & Visualizer",
   "description": "Live per-session token and context usage for Claude Code, with one-click handoffs into a fresh session (written by Opus by default, or any model you pick), for context length and token optimization.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "publisher": "vizzer",
   "license": "MIT",
   "repository": {
